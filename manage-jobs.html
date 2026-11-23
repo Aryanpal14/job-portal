@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manage Jobs - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>My Job Postings</h2>
+<div id="list"></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+async function load(){
+  const r=await api('GET','my-jobs');
+  $('#list').innerHTML=r.jobs.map(j=>jobCard(j,jobButtons(j,true)+` <span class="t">${j.count} applicants</span>`)).join('')||'<p class="mu">No jobs yet. Use Add Job.</p>';
+}
+guard('recruiter').then(u=>u&&run(load));
+</script></body></html>

@@ -1,0 +1,39 @@
+/* JOB PORTAL - shared stylesheet (CSS). Supports light and dark mode automatically. */
+:root{--bg:#f3f5f9;--cd:#fff;--tx:#1b2333;--mu:#6b7488;--pr:#2457c5;--bd:#dde2ec;--ok:#16794a;--er:#b3261e}
+@media(prefers-color-scheme:dark){:root{--bg:#0f131c;--cd:#192031;--tx:#e8ecf5;--mu:#9aa5bb;--pr:#7aa2f7;--bd:#2b3550;--ok:#4cc38a;--er:#f27a70}}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--tx)}
+/* ---- header / navigation ---- */
+header{background:var(--pr);color:#fff;padding:10px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+header b{font-size:18px;margin-right:auto}
+header a{color:#fff;cursor:pointer;padding:5px 10px;border-radius:6px;text-decoration:none}
+header a.on,header a:hover{background:rgba(255,255,255,.22)}
+main{max-width:1000px;margin:18px auto;padding:0 14px}
+h2{margin:0 0 12px}h3{margin:0 0 3px;font-size:15px}
+.mu{color:var(--mu);font-size:12.5px}
+/* ---- cards and grid ---- */
+.cd{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.big{font-size:26px;font-weight:700;color:var(--pr)}
+.r{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+/* ---- forms ---- */
+input,select,textarea{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font:inherit;margin:3px 0 9px}
+label{font-size:12.5px;color:var(--mu)}
+.box{max-width:400px;margin:50px auto}
+/* ---- buttons and tags ---- */
+.b{display:inline-block;background:var(--pr);color:#fff;border:0;border-radius:6px;padding:7px 13px;cursor:pointer;font:inherit;text-decoration:none}
+.b.s{background:none;color:var(--pr);border:1px solid var(--pr)}
+.b.m{padding:3px 9px;font-size:12.5px}
+.b.d{background:var(--er)}.b:disabled{opacity:.5;cursor:default}
+.t{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;border:1px solid var(--bd)}
+/* ---- tables ---- */
+table{width:100%;border-collapse:collapse}
+td,th{text-align:left;padding:7px;border-bottom:1px solid var(--bd);vertical-align:top}
+/* ---- stats bars ---- */
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pr)}
+/* ---- toast message ---- */
+#msg{position:fixed;top:10px;right:10px;background:var(--er);color:#fff;padding:8px 14px;border-radius:8px;display:none;z-index:9}
+#msg.ok{background:var(--ok)}
+/* ---- landing page ---- */
+.hero{text-align:center;padding:30px 10px}.hero h1{margin:0 0 6px;font-size:30px;color:var(--pr)}

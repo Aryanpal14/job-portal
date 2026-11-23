@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Database - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>Database (SQLite)</h2>
+<div class="cd"><h3>Schema (schema.sql)</h3><pre id="schema" style="overflow:auto;font-size:12px"></pre></div>
+<div id="tables"></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+async function load(){
+  const r=await api('GET','admin/db');
+  $('#schema').textContent=r.schema;
+  $('#tables').innerHTML=Object.entries(r.tables).map(([t,rows])=>`<div class="cd"><h3>Table: ${t} <span class="t">${rows.length} rows</span></h3><div style="overflow:auto"><table>${rows.length?'<tr>'+Object.keys(rows[0]).map(k=>`<th>${esc(k)}</th>`).join('')+'</tr>'+rows.map(x=>'<tr>'+Object.values(x).map(v=>`<td>${esc(v)}</td>`).join('')+'</tr>').join(''):'<tr><td class="mu">Empty</td></tr>'}</table></div></div>`).join('');
+}
+guard('admin').then(u=>u&&run(load));
+</script></body></html>

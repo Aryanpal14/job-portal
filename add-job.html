@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Add Job - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2 id="ttl">Add Job</h2>
+<div class="cd">
+ <div class="g">
+  <div><label>Title</label><input id="jt"></div><div><label>Location</label><input id="jl"></div>
+  <div><label>Type</label><select id="jy"><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Contract</option></select></div>
+  <div><label>Salary</label><input id="js"></div><div><label>Deadline</label><input id="jd" type="date"></div>
+ </div>
+ <label>Required skills (comma separated)</label><input id="jk">
+ <label>Description</label><textarea id="jx" rows="4"></textarea>
+ <button class="b" id="sv" onclick="saveJob()">Publish job</button></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+const editId=new URLSearchParams(location.search).get('edit');   // ?edit=ID means editing
+async function init(){
+  if(!editId)return;
+  const j=(await api('GET','jobs/'+editId)).job;
+  $('#ttl').textContent='Edit Job';$('#sv').textContent='Update job';
+  $('#jt').value=j.title;$('#jl').value=j.location;$('#jy').value=j.type;$('#js').value=j.salary;$('#jd').value=j.deadline;$('#jk').value=j.skills;$('#jx').value=j.desc;
+}
+const saveJob=()=>run(async()=>{
+  const b={title:$('#jt').value,location:$('#jl').value,type:$('#jy').value,salary:$('#js').value,deadline:$('#jd').value,skills:$('#jk').value,desc:$('#jx').value};
+  await api(editId?'PUT':'POST',editId?'jobs/'+editId:'jobs',b);
+  location.href='/recruiter/manage-jobs.html';
+});
+guard('recruiter').then(u=>u&&run(init));
+</script></body></html>

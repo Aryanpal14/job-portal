@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Browse Jobs - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>Available Jobs</h2>
+<div class="cd g">
+ <div><label>Search</label><input id="q" placeholder="title, company, location, skill" onchange="st.p=1;load()"></div>
+ <div><label>Type</label><select id="t" onchange="st.p=1;load()"><option value="">All</option><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Contract</option></select></div>
+</div>
+<div id="list"></div>
+<div class="r"><button class="b m s" id="prev">Previous</button><span class="mu" id="pgi"></span><button class="b m s" id="next">Next</button></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+let st={p:1};
+async function load(){                       // search + filter + pagination (5 per page)
+  const r=await api('GET',`jobs?q=${encodeURIComponent($('#q').value)}&type=${$('#t').value}&page=${st.p}`);
+  $('#list').innerHTML=r.jobs.map(j=>jobCard(j,`<button class="b m" ${j.applied?'disabled':''} onclick="apply(${j.id})">${j.applied?'Applied':'Apply'}</button>`)).join('')||'<p class="mu">No jobs found.</p>';
+  $('#pgi').textContent=`Page ${st.p} of ${r.pages} (${r.total} jobs)`;
+  $('#prev').disabled=st.p<=1;$('#next').disabled=st.p>=r.pages;
+}
+$('#prev').onclick=()=>{st.p--;run(load)};$('#next').onclick=()=>{st.p++;run(load)};
+function apply(id){const l=prompt('Cover letter (optional):');if(l===null)return;run(async()=>{await api('POST','apply',{jobId:id,letter:l});say('Applied successfully',1);load()})}
+guard('user').then(u=>u&&run(load));
+</script></body></html>

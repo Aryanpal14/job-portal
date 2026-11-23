@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>Profile</h2>
+<div class="cd">
+ <label>Name</label><input id="pn"><label>Email</label><input id="pe" disabled>
+ <label>Location</label><input id="pl"><label>Skills (comma separated)</label><input id="ps">
+ <label>About</label><textarea id="pb" rows="3"></textarea>
+ <button class="b" onclick="saveProfile()">Save profile</button></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+guard('user').then(u=>u&&fillProfile(u));
+</script></body></html>

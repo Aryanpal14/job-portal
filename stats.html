@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistics - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>Dashboard</h2>
+<div class="g" id="cards"></div>
+<div class="cd"><h3>Applications by status</h3><div id="bars"></div></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+async function load(){
+  const s=await api('GET','admin/stats');
+  $('#cards').innerHTML=[['Job seekers',s.users],['Recruiters',s.recruiters],['Jobs',s.jobs],['Open jobs',s.openJobs],['Applications',s.apps]].map(x=>`<div class="cd"><div class="big">${x[1]}</div><div class="mu">${x[0]}</div></div>`).join('');
+  $('#bars').innerHTML=ST.map(k=>`<div class="r mu" style="margin-top:6px"><span>${k}</span><span>${s.status[k]}</span></div><div class="bar"><i style="width:${s.apps?100*s.status[k]/s.apps:0}%"></i></div>`).join('');
+}
+guard('admin').then(u=>u&&run(load));
+</script></body></html>

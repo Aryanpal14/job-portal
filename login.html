@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User Login - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<div class="cd box"><h2>User Login</h2>
+ <label>Email</label><input id="e" type="email">
+ <label>Password</label><input id="p" type="password" onkeydown="if(event.key=='Enter')doLogin('user')">
+ <button class="b" onclick="doLogin('user')">Login</button> <a class="b s" href="/user/register.html">Register</a>
+ <p class="mu">Demo: user@jobportal.com / user123</p><p><a href="/index.html">Back to home</a></p></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+/* nothing else needed: doLogin() is in common.js */
+</script></body></html>

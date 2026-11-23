@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Applications - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>My Applications</h2>
+<div class="cd"><table><thead><tr><th>Job</th><th>Company</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+async function load(){
+  const r=await api('GET','my-applications');
+  $('#rows').innerHTML=r.apps.map(a=>`<tr><td>${esc(a.job.title)}</td><td>${esc(a.job.company)}</td><td>${a.date}</td><td><span class="t">${a.status}</span></td><td>${a.status=='Applied'?`<button class="b m d" onclick="withdraw(${a.id})">Withdraw</button>`:''}</td></tr>`).join('')||'<tr><td class="mu" colspan="5">No applications yet.</td></tr>';
+}
+const withdraw=id=>{if(confirm('Withdraw this application?'))run(async()=>{await api('DELETE','applications/'+id);load()})};
+guard('user').then(u=>u&&run(load));
+</script></body></html>

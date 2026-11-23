@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manage Users - Job Portal</title><link rel="stylesheet" href="/css/style.css"></head><body>
+<div id="msg"></div><header id="hd"><b>Job Portal</b></header>
+<main id="main">
+<h2>Manage Users</h2>
+<div class="cd"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</main>
+<script src="/js/common.js"></script>
+<script>
+let me;
+async function load(){
+  const r=await api('GET','admin/users');
+  $('#rows').innerHTML=r.users.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.id==me.id?u.role:`<select onchange="setRole(${u.id},this.value)">${['user','recruiter','admin'].map(x=>`<option ${x==u.role?'selected':''}>${x}</option>`).join('')}</select>`}</td>
+   <td>${u.id==me.id?'':`<button class="b m d" onclick="delUser(${u.id})">Delete</button>`}</td></tr>`).join('');
+}
+const setRole=(id,r)=>run(async()=>{await api('PUT','admin/users/'+id,{role:r});say('Role updated',1)});
+const delUser=id=>{if(confirm('Delete this user and all their data?'))run(async()=>{await api('DELETE','admin/users/'+id);load()})};
+guard('admin').then(u=>{me=u;u&&run(load)});
+</script></body></html>
