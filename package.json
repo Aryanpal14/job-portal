@@ -1,0 +1,1 @@
+{"name":"job-portal","version":"1.0.0","description":"Job Portal (admin / recruiter / user) - zero dependencies","main":"server.js","scripts":{"start":"node server.js"}}
